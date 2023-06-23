@@ -124,7 +124,8 @@ async def Main():
     @rust_socket.command(aliases=["Event", "Events","events" ])
     async def event(command: Command):
         for marker in await rust_socket.get_markers():
-            print(f"{marker.name} ({marker.x},{marker.y})")   
+            
+            await rust_socket.send_team_message(f"{marker.name} ({marker.x},{marker.y})")
         
 #!decay
     @rust_socket.command(aliases=["Decay"])
