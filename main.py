@@ -85,7 +85,7 @@ async def Main():
             
 
 
-        if(Monument == "loil" or "large" ) :
+        if(Monument == "large" ) :
           
             for i in LoilCodes:
                 await rust_socket.send_team_message(i)
