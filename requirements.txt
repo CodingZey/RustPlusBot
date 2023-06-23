@@ -1,0 +1,2 @@
+rustplus==3.6.6
+asyncio==3.4.3
