@@ -28,7 +28,7 @@ async def Main():
 #!help
     @rust_socket.command(aliases=["Help", "H", "h"])
     async def help(command: Command):
-        await rust_socket.send_team_message("!help, !time, !queue, !pop, !seed, !team, !promote[], !codes [] ")
+        await rust_socket.send_team_message("!help, !time, !queue, !pop, !seed, !team, !promote { }, !codes { } ")
 
 #!time
     @rust_socket.command(aliases=["Time", "T", "t"])
