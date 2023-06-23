@@ -126,12 +126,20 @@ async def Main():
         for marker in await rust_socket.get_markers():
             print(f"{marker.name} ({marker.x},{marker.y})")   
         
-
-
-
-
-
-
+#!decay
+    @rust_socket.command(aliases=["Decay"])
+    async def decay(command: Command):
+        Bgrade = str(command.args[0].lower())#
+        if(Bgrade == "wood"):
+            await rust_socket.send_team_message("3 hours")
+        elif(Bgrade == "stone"):
+            await rust_socket.send_team_message("5 hours")
+        elif(Bgrade == "metal"):
+            await rust_socket.send_team_message("8 hours")
+        elif(Bgrade == "hqme"):
+            await rust_socket.send_team_message("12 hours")
+        else:
+            await rust_socket.send_team_message("12 hours")
 
     await rust_socket.hang()
 
