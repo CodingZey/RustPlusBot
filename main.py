@@ -6,7 +6,7 @@
 
 
 import asyncio
-from rustplus import RustSocket, CommandOptions, Command, TeamEvent
+from rustplus import RustSocket, CommandOptions, Command, TeamEvent, convert_xy_to_grid
 
 options = CommandOptions(prefix="!")
 rust_socket = RustSocket("145.239.205.187",  "28089", 76561199473072288, 1509473755, command_options=options)
@@ -18,8 +18,12 @@ LoilCodes = ["OILRIG2HELI", "OILRIG2DOCK", "OILRIG2EXHAUST", "OILRIG2L1","OILRIG
 BanditCampCodes = ["CASINOTOWN, WEAPONS"]
 DomeCodes = ["DOME1,DOMETOP"]
 SiloCodes = ["SILOEXIT1", "SILOEXIT2", "SILOMISSILE", "SILOSHIPPING", "SILOTOWER"]
-OutpostCodes = ["COMPOUNDSTREET","COMPOUNDMUSIC","COMPOUNDCRUDE","COMPOUNDCHILL", ]
+OutpostCodes = ["COMPOUNDSTREET","COMPOUNDMUSIC","COMPOUNDCRUDE","COMPOUNDCHILL" ]
 SmoilCodes = ["OILRIG1HELI","OILRIG1DOCK", "OILRIG1EXHAUST", "OILRIG1L1", "OILRIG1L2", "OILRIG1L3", "OILRIG1L4" ] 
+
+
+
+
 
 async def Main():
     await rust_socket.connect()
@@ -122,10 +126,12 @@ async def Main():
         
 #!events
     @rust_socket.command(aliases=["Event", "Events","events" ])
-    async def event(command: Command):
-        for marker in await rust_socket.get_markers():
-            
-            await rust_socket.send_team_message(f"{marker.name} ({marker.x},{marker.y})")
+    async def event( command: Command):
+        for marker in await rust_socket.get_current_events():
+            size = (await rust_socket.get_info()).size
+            grid = convert_xy_to_grid((marker.x, marker.y), size , False)
+            await rust_socket.send_team_message(f"{grid[0]}{grid[1]}")
+                                                
         
 #!decay
     @rust_socket.command(aliases=["Decay"])
@@ -147,7 +153,7 @@ async def Main():
 
 
 
-asyncio.run(Main())
+asyncio.run(Main()) 
 
 
 
