@@ -85,7 +85,7 @@ async def Main():
             
 
 
-        if(Monument == "loil" ) :
+        if(Monument == "loil" or "large" ) :
           
             for i in LoilCodes:
                 await rust_socket.send_team_message(i)
@@ -109,7 +109,7 @@ async def Main():
             for i in OutpostCodes:
                 await rust_socket.send_team_message(i)
 
-        elif(Monument  == "smoil" ):
+        elif(Monument  == "smoil "  ):
             for i in SmoilCodes:
                 await rust_socket.send_team_message(i)
 
