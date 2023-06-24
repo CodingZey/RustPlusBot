@@ -144,7 +144,7 @@ async def Main():
             await rust_socket.send_team_message("5 hours")
         elif(Bgrade == "metal"):
             await rust_socket.send_team_message("8 hours")
-        elif(Bgrade == "hqme"):
+        elif(Bgrade == "hqm"):
             await rust_socket.send_team_message("12 hours")
         else:
             await rust_socket.send_team_message("12 hours")
