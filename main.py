@@ -1,5 +1,4 @@
 #implement warning message 5 minutes before night time or day time 
-#1
 
 
 
@@ -7,6 +6,7 @@
 
 
 import asyncio
+import math
 from rustplus import RustSocket, CommandOptions, Command, TeamEvent, convert_xy_to_grid
 
 options = CommandOptions(prefix="!")
@@ -33,7 +33,7 @@ async def Main():
 #!help
     @rust_socket.command(aliases=["Help", "H", "h"])
     async def help(command: Command):
-        await rust_socket.send_team_message("!help, !time, !queue, !pop, !seed, !team, !promote { }, !codes { } ")
+        await rust_socket.send_team_message("!help, !time, !queue, !pop, !seed, !team, !promote { }, !codes { }, !events, !decay, !night, !day")
 
 #!time
     @rust_socket.command(aliases=["Time", "T", "t"])
@@ -149,7 +149,51 @@ async def Main():
         else:
             await rust_socket.send_team_message("12 hours")
 
+
+
+
+#!night
+    @rust_socket.command(aliases=["Night", "N", "m"])
+    async def night(command: Command):
+        currentTime = (await rust_socket.get_time()).raw_time
+
+        currentTime = currentTime % 2400
+
+       
+        
+        if (currentTime >= 2000) or (currentTime < 700):
+            await rust_socket.send_team_message("It's already night time")
+
+        else:
+            tillNight = (2000 - currentTime) % 2400
+            await rust_socket.send_team_message("It will be Night in " + str(math.trunc(tillNight * 150 / 60) % 60) + " minutes")
+           
+#!day
+
+
+    @rust_socket.command(aliases=["Day", "D", "d"])
+    async def day(command: Command):
+        currentTime = (await rust_socket.get_time()).raw_time
+
+        if (currentTime >= 6590) or (currentTime < 2000):
+            await rust_socket.send_team_message("It's already day time")
+        else:
+            tillDay = (2000 - currentTime) % 2400  # Handle the rollover from 20:00 to 00:00
+            minutes = math.trunc(tillDay * 150 / 60) % 60
+            await rust_socket.send_team_message("It will be Day in " + str(minutes) + " minutes")
+
+            
+        
+
+
+
+
+
+
     await rust_socket.hang()
+
+
+
 
 
 
