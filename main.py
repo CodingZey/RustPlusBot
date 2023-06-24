@@ -149,6 +149,8 @@ async def Main():
         else:
             await rust_socket.send_team_message("12 hours")
 
+#decay claculator
+
 
 
 
