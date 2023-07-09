@@ -1,7 +1,7 @@
 # RustPlusBot
 
 This is a Rust Chatbot that uses rust plus (through the rustplus module in python) to send messages in game chat.
-Includes: ("!help, !time, !queue, !pop, !seed, !team, !promote { }, !codes { }, !events, !decay, !location")
+Includes: ("!help, !time, !queue, !pop, !seed, !team, !promote { }, !codes { }, !events, !decay, !location, !xy")
 
 Consist of two files 
 main.py with all code (server and users is hardcoded for now)
