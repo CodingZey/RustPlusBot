@@ -1,0 +1,4 @@
+pip install --upgrade pip && pip install -r requirements.txt
+python main.py
+3.8.2
+PYTHON_VERSION
