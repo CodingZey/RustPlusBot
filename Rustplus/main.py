@@ -4,6 +4,7 @@
 
 
 from datetime import datetime
+
 import asyncio
 import math
 from rustplus import RustSocket, CommandOptions, Command, TeamEvent, convert_xy_to_grid
@@ -169,7 +170,7 @@ async def Main():
         currentTime = (await rust_socket.get_time()).raw_time
             
 
-        if (0 <= currentTime <= 4) or (20 <= currentTime <= 24) or (-4 <= currentTime <= 0):
+        if (0 <= currentTime <= 4):
                 
             print("night")
         else:
@@ -199,34 +200,40 @@ async def Main():
             await rust_socket.send_team_message(member.name+ " Is at " + f"( {grid[0]}{ (grid[1]) })")
 
 #!xy
-                                                                    #creates xy diagramm
-    import asyncio
-    from datetime import datetime
+                                                                    #creates xy diagramm and collect data on Time https://imgur.com/kcI6hV3
+    
 
-    @rust_socket.command(aliases=[])
-    async def xy(command: Command):
-        async def write_to_file():
-            while True:
-                now = datetime.now()
-                current_time = now.strftime("%H:%M:%S")
-
-
-
-                f = open("output.txt", "a")
-                f.write(f"Current Time: {current_time}\n")
-                f.write(f"Server Time: {(await rust_socket.get_time()).time}\n")
-                f.close()
-
-                await asyncio.sleep(1)
-
-
-
-        asyncio.create_task(write_to_file())
-        # Add your other commands here
-
-        # Keep the event loop running to allow other commands to execute
+    @rust_socket.command()                                        #Gives name and location for everyone on the team 
+    async def xy(command: Command):    
+           
         while True:
+               
+
+            currentTime = (await rust_socket.get_time()).raw_time
+            currentTime = round(currentTime, 2)
+            print(currentTime)
             await asyncio.sleep(1)
+                
+
+            if  (17.60<= currentTime <= 17.70):    #intervall weg machen y= x/60 17.y*100
+                await rust_socket.send_team_message("It will be Night in 5 Minutes")
+                print("It will be Night in 5 Minutes")
+            elif(23.86<= currentTime <= 23.96):
+                await rust_socket.send_team_message("It will be Day in 5 Minutes")
+                print("It will be Day in 5 Minutes")
+
+
+                
+            
+
+
+
+
+
+
+        
+       #penis
+        
 
 
 
