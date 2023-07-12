@@ -203,8 +203,8 @@ async def Main():
 #!xy
                                                                     #creates xy diagramm and collect data on Time https://imgur.com/kcI6hV3
     
-
-    async def autoRun():
+    @rust_socket.command()
+    async def autoRun(command: Command):
 
             while True:
 
@@ -225,7 +225,7 @@ async def Main():
 
 
 
-    asyncio.create_task(autoRun())
+   
 
 
                 
