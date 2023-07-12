@@ -204,24 +204,28 @@ async def Main():
                                                                     #creates xy diagramm and collect data on Time https://imgur.com/kcI6hV3
     
 
-    @rust_socket.command()                                        #Gives name and location for everyone on the team 
-    async def xy(command: Command):    
-           
-        while True:
-               
+    async def autoRun():
 
-            currentTime = (await rust_socket.get_time()).raw_time
-            currentTime = round(currentTime, 2)
-            print(currentTime)
-            await asyncio.sleep(1)
-                
+            while True:
 
-            if  (17.60<= currentTime <= 17.70):    #intervall weg machen y= x/60 17.y*100
-                await rust_socket.send_team_message("It will be Night in 5 Minutes")
-                print("It will be Night in 5 Minutes")
-            elif(23.86<= currentTime <= 23.96):
-                await rust_socket.send_team_message("It will be Day in 5 Minutes")
-                print("It will be Day in 5 Minutes")
+
+                currentTime = (await rust_socket.get_time()).raw_time
+                currentTime = round(currentTime, 2)
+                print(currentTime)
+                await asyncio.sleep(1)
+
+
+                if  (17.60<= currentTime <= 17.70):    #intervall weg machen y= x/60 17.y*100
+                    await rust_socket.send_team_message("It will be Night in 5 Minutes")
+                    print("It will be Night in 5 Minutes")
+                elif(23.86<= currentTime <= 23.96):
+                    await rust_socket.send_team_message("It will be Day in 5 Minutes")
+                    print("It will be Day in 5 Minutes")
+
+
+
+
+    asyncio.create_task(autoRun())
 
 
                 
