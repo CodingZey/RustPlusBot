@@ -41,6 +41,23 @@ SmoilCodes = ["OILRIG1HELI","OILRIG1DOCK", "OILRIG1EXHAUST", "OILRIG1L1", "OILRI
 async def Main():
     await rust_socket.connect()
 
+    
+
+
+
+
+
+
+
+  
+                        
+               
+        
+
+
+
+
+
 
 #!help
     @rust_socket.command(aliases=["Help", "H", "h"])
@@ -146,40 +163,6 @@ async def Main():
             await rust_socket.send_team_message(f"{grid[0]}{grid[1]}")
                                                 
         
-#!decay
-    @rust_socket.command(aliases=["Decay"])
-    async def decay(command: Command):                                                  #will tell you decay time dependant on what you select 
-        Bgrade = str(command.args[0].lower())#
-        if(Bgrade == "wood"):
-            await rust_socket.send_team_message("3 hours")
-        elif(Bgrade == "stone"):
-            await rust_socket.send_team_message("5 hours")
-        elif(Bgrade == "metal"):
-            await rust_socket.send_team_message("8 hours")
-        elif(Bgrade == "hqme"):
-            await rust_socket.send_team_message("12 hours")
-        else:
-            await rust_socket.send_team_message("12 hours")
-
-
-
-
-#!test
-
-    @rust_socket.command(aliases=["Night", "N", "m"])                                                               #working on rust time to irl (WIP)
-    async def test111(command: Command):
-        currentTime = (await rust_socket.get_time()).raw_time
-            
-
-        if (0 <= currentTime <= 4):
-                
-            print("night")
-        else:
-            tillNight = 20-currentTime
-            minutesTillNight = tillNight*2.5
-            print(minutesTillNight)
-
-            
 
 
 
@@ -200,27 +183,80 @@ async def Main():
            
             await rust_socket.send_team_message(member.name+ " Is at " + f"( {grid[0]}{ (grid[1]) })")
 
-#!xy
-                                                                    #creates xy diagramm and collect data on Time https://imgur.com/kcI6hV3
-    
-    @rust_socket.command()
-    async def autoRun(command: Command):
+#!calc
+    @rust_socket.command(aliases=["Calc"])
+    async def calc(command: Command):
+        args = [arg.lower() for arg in command.args]
 
-            while True:
+        if args[0] == "craft":
+            print(args[0])
+
+        elif args[0] == "scrap":
+            print(args[0])
+
+        elif args[0] == "rec":
+            print(args[0])
+
+        elif args[0] == "raid":
+            print(args[0])
+
+        elif args[0] == "decay":
+            if len(args) >= 3:  # Check if there are at least three arguments
+                decay_material = args[1]
+                decay_value = args[2]
+
+                if decay_material == "wood":
+                    x = int(decay_value) / 83
+                    result = round(x, 2)
+                    await rust_socket.send_team_message(str(math.trunc(x/1.66666666666*100 )) + " minutes till decay")
+
+                elif decay_material == "stone":
+                    x = int(decay_value) / 100
+                    result = round(x, 2)
+                    await rust_socket.send_team_message(str(math.trunc(x/1.66666666666*100)) + " minutes till decay")
+
+                elif decay_material == "metal":
+                    x = int(decay_value) / 125
+                    result = round(x, 2)
+                    await rust_socket.send_team_message(str(math.trunc(x/1.66666666666*100 )) + " minutes till decay")
+
+                elif decay_material == "hqm":
+                    x = int(decay_value) / 166
+                    
+                    await rust_socket.send_team_message(str(math.trunc(x/1.66666666666*100)) + " minutes till decay")
+
+            else:
+                await rust_socket.send_team_message("Command usage: !calc decay [material] [value]")
+        else:
+            await rust_socket.send_team_message("This is not a valid argument, try [scrap, rec, raid, craft, decay]")
+
+                           
 
 
-                currentTime = (await rust_socket.get_time()).raw_time
-                currentTime = round(currentTime, 2)
-                print(currentTime)
-                await asyncio.sleep(1)
+    async def nightDay():
+        print("night/day tracked")
+        isTime = True
+        isTime2 = True
 
+        day_message_sent = False  # Flag to track if the day message has been sent
 
-                if  (17.60<= currentTime <= 17.70):    #intervall weg machen y= x/60 17.y*100
-                    await rust_socket.send_team_message("It will be Night in 5 Minutes")
-                    print("It will be Night in 5 Minutes")
-                elif(23.86<= currentTime <= 23.96):
-                    await rust_socket.send_team_message("It will be Day in 5 Minutes")
-                    print("It will be Day in 5 Minutes")
+        while isTime or isTime2:
+            currentTime = (await rust_socket.get_time()).raw_time
+            currentTime = round(currentTime, 2)
+
+            await asyncio.sleep(1)
+
+            if currentTime == 17.65 and isTime:
+                await rust_socket.send_team_message("It will be Night in 5 Minutes")
+                isTime = False
+
+            elif 23.90 <= currentTime <= 23.91 and isTime2 and not day_message_sent:
+                await rust_socket.send_team_message("It will be Day in 5 Minutes")
+                day_message_sent = True
+
+        # Other parts of the code or additional logic can set isTime or isTime2 back to True if needed.
+
+    asyncio.create_task(nightDay())
 
 
 
